@@ -36,7 +36,7 @@
             "outputPath": "dist/shell",
             "index": "projects/shell/src/index.html",
             "browser": "projects/shell/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": ["zone.js", "es-module-shims"],
             "tsConfig": "projects/shell/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -143,7 +143,7 @@
             "outputPath": "dist/incidents",
             "index": "projects/incidents/src/index.html",
             "browser": "projects/incidents/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": ["zone.js", "es-module-shims"],
             "tsConfig": "projects/incidents/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -245,7 +245,7 @@
             "outputPath": "dist/services",
             "index": "projects/services/src/index.html",
             "browser": "projects/services/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": ["zone.js", "es-module-shims"],
             "tsConfig": "projects/services/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
