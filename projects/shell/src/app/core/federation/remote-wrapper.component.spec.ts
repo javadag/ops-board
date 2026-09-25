@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router'
 import { RemoteWrapperComponent } from './remote-wrapper.component'
 import { RuntimeConfigService } from '../config/runtime-config.service'
 
+jest.mock('@angular-architects/native-federation', () => ({
+  loadRemoteModule: jest.fn().mockRejectedValue(new Error('Connection refused'))
+}))
+
 describe('RemoteWrapperComponent', () => {
   let component: RemoteWrapperComponent
   let fixture: ComponentFixture<RemoteWrapperComponent>
@@ -39,8 +43,8 @@ describe('RemoteWrapperComponent', () => {
   })
 
   it('should initialize and show error gracefully when remote server is offline', async () => {
-    // Calling loadRemote will fail because no remote is running during isolated unit tests
-    await component.loadRemote()
+    fixture.detectChanges()
+    await fixture.whenStable()
     fixture.detectChanges()
 
     expect(component.hasError).toBe(true)

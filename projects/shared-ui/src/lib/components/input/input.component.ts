@@ -42,7 +42,7 @@ export class InputComponent implements ControlValueAccessor {
 
   @Output() valueChange = new EventEmitter<string>()
 
-  value = ''
+  @Input() value = ''
 
   private onChange: (value: string) => void = () => {}
   private onTouched: () => void = () => {}

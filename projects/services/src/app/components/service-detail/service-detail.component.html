@@ -24,7 +24,7 @@
         title="Inspect related incidents for this service"
       >
         <span class="btn-content">
-          <span>View Incidents ({{ service.activeIncidentCount }})</span>
+          <span>View Incidents ({{ service.activeIncidentCount ?? 0 }})</span>
           <span class="external-icon">↗</span>
         </span>
       </ui-button>
@@ -70,9 +70,9 @@
       <span class="kpi-label">Active Incidents</span>
       <span
         class="kpi-value font-mono"
-        [class.danger]="service.activeIncidentCount > 0"
+        [class.danger]="(service.activeIncidentCount ?? 0) > 0"
       >
-        {{ service.activeIncidentCount }}
+        {{ service.activeIncidentCount ?? 0 }}
       </span>
       <span class="kpi-sub">Open P1-P4</span>
     </div>

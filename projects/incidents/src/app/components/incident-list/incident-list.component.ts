@@ -90,8 +90,13 @@ export class IncidentListComponent {
     this.incidentService.selectIncident(incident)
   }
 
-  onSortChange(event: { column: keyof Incident; order: 'asc' | 'desc' }): void {
-    this.incidentService.setSorting(event.column, event.order)
+  onSortChange(event: { column: string; order: 'asc' | 'desc' }): void {
+    if (['startTime', 'severity', 'status', 'title'].includes(event.column)) {
+      this.incidentService.setSorting(
+        event.column as 'startTime' | 'severity' | 'status' | 'title',
+        event.order
+      )
+    }
   }
 
   formatTime(isoString: string): string {

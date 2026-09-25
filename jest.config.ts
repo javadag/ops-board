@@ -15,7 +15,9 @@ const config: Config = {
       }
     ]
   },
-  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|@angular|rxjs)'],
+  transformIgnorePatterns: [
+    'node_modules/(?!.*\\.mjs$|@angular|rxjs|@angular-architects|@softarc)'
+  ],
   moduleFileExtensions: ['ts', 'html', 'js', 'json', 'mjs'],
   moduleNameMapper: {
     '^@ops-board/shared-ui$': '<rootDir>/projects/shared-ui/src/public-api.ts',

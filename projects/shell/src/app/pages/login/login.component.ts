@@ -1,17 +1,13 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Router } from '@angular/router'
-import {
-  ButtonComponent,
-  CardComponent,
-  BadgeComponent
-} from '@ops-board/shared-ui'
+import { ButtonComponent, BadgeComponent } from '@ops-board/shared-ui'
 import { MockAuthService, MOCK_USERS } from '../../core/auth/mock-auth.service'
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, CardComponent, BadgeComponent],
+  imports: [CommonModule, ButtonComponent, BadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']

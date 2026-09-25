@@ -130,7 +130,7 @@
         <div class="footer-badges">
           <span class="version-tag font-mono">{{ svc.version }}</span>
           <ui-badge
-            *ngIf="svc.activeIncidentCount > 0"
+            *ngIf="(svc.activeIncidentCount ?? 0) > 0"
             variant="danger"
             size="sm"
           >

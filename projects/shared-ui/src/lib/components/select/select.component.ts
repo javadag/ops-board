@@ -44,7 +44,7 @@ export class SelectComponent implements ControlValueAccessor {
 
   @Output() selectionChange = new EventEmitter<string>()
 
-  value = ''
+  @Input() value = ''
 
   private onChange: (value: string) => void = () => {}
   private onTouched: () => void = () => {}

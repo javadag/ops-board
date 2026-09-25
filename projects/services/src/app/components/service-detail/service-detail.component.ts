@@ -11,7 +11,6 @@ import {
   Service,
   BadgeComponent,
   ButtonComponent,
-  CardComponent,
   StatusIndicatorComponent
 } from '@ops-board/shared-ui'
 import { ServiceDependenciesComponent } from '../service-dependencies/service-dependencies.component'
@@ -24,7 +23,6 @@ import { ServiceService } from '../../data/service.service'
     CommonModule,
     BadgeComponent,
     ButtonComponent,
-    CardComponent,
     StatusIndicatorComponent,
     ServiceDependenciesComponent
   ],

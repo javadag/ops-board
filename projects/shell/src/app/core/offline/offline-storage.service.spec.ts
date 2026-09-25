@@ -8,11 +8,14 @@ describe('OfflineStorageService', () => {
   const mockIncident: Incident = {
     id: 'INC-TEST-1',
     title: 'Offline Test Incident',
-    severity: 'p2',
-    status: 'investigating',
+    severity: 'P2',
+    status: 'Investigating',
     affectedService: 'Auth Service',
     assignedTeam: 'Identity & Access',
     startTime: '2026-09-25T12:00:00Z',
+    summary: 'Test summary',
+    impact: 'Low impact',
+    leadResponder: 'Alice',
     timeline: []
   }
 

@@ -5,7 +5,6 @@ import {
   InputComponent,
   SelectComponent,
   ButtonComponent,
-  BadgeComponent,
   IncidentSeverity,
   IncidentStatus
 } from '@ops-board/shared-ui'
@@ -14,14 +13,7 @@ import { IncidentService } from '../../data/incident.service'
 @Component({
   selector: 'incidents-filters',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    InputComponent,
-    SelectComponent,
-    ButtonComponent,
-    BadgeComponent
-  ],
+  imports: [CommonModule, InputComponent, SelectComponent, ButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './incident-filters.component.html',
   styleUrls: ['./incident-filters.component.scss']

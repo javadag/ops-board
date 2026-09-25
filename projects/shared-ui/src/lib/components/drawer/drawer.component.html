@@ -4,6 +4,8 @@
     role="dialog"
     aria-modal="true"
     [attr.aria-labelledby]="title ? 'drawer-title' : null"
+    [style.max-width]="width || null"
+    [style.width]="width || null"
     (click)="$event.stopPropagation()"
   >
     <header class="drawer-header">
@@ -17,7 +19,7 @@
         type="button"
         class="drawer-close-btn"
         aria-label="Close panel"
-        (click)="close.emit()"
+        (click)="onClose()"
       >
         <svg
           width="20"

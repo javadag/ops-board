@@ -23,19 +23,28 @@ export class DrawerComponent {
   @Input() position: 'right' | 'left' = 'right'
   @Input() closeOnBackdrop = true
   @Input() hasFooter = false
+  @Input() width?: string
 
   @Output() close = new EventEmitter<void>()
+  @Output() closed = new EventEmitter<void>()
 
   @HostListener('document:keydown.escape')
   onEscape(): void {
     if (this.isOpen) {
       this.close.emit()
+      this.closed.emit()
     }
   }
 
   onBackdropClick(event: MouseEvent): void {
     if (this.closeOnBackdrop && event.target === event.currentTarget) {
       this.close.emit()
+      this.closed.emit()
     }
+  }
+
+  onClose(): void {
+    this.close.emit()
+    this.closed.emit()
   }
 }

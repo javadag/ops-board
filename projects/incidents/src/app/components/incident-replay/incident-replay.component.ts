@@ -11,14 +11,13 @@ import { CommonModule } from '@angular/common'
 import {
   TimelineEvent,
   TimelineComponent,
-  ButtonComponent,
   BadgeComponent
 } from '@ops-board/shared-ui'
 
 @Component({
   selector: 'incidents-replay',
   standalone: true,
-  imports: [CommonModule, TimelineComponent, ButtonComponent, BadgeComponent],
+  imports: [CommonModule, TimelineComponent, BadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './incident-replay.component.html',
   styleUrls: ['./incident-replay.component.scss']
@@ -86,9 +85,9 @@ export class IncidentReplayComponent implements OnChanges, OnDestroy {
   }
 
   restart(): void {
-    this.pause()
+    this.stopTimer()
     this.currentStep = 0
-    this.cdr.markForCheck()
+    this.play()
   }
 
   stepForward(): void {
@@ -130,9 +129,9 @@ export class IncidentReplayComponent implements OnChanges, OnDestroy {
     }
   }
 
-  private reset(): void {
+  reset(): void {
     this.pause()
-    this.currentStep = 0
+    this.currentStep = this.events && this.events.length > 0 ? 1 : 0
     this.cdr.markForCheck()
   }
 }
