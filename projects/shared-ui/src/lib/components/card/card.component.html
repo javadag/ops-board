@@ -1,0 +1,24 @@
+<div
+  class="card"
+  [class.card-interactive]="interactive"
+  [class.card-elevated]="elevated"
+>
+  <header *ngIf="hasHeader || title" class="card-header">
+    <div class="card-title-group">
+      <h3 *ngIf="title" class="card-title">{{ title }}</h3>
+      <p *ngIf="subtitle" class="card-subtitle">{{ subtitle }}</p>
+      <ng-content select="[card-header-left]"></ng-content>
+    </div>
+    <div class="card-actions">
+      <ng-content select="[card-actions]"></ng-content>
+    </div>
+  </header>
+
+  <div class="card-body" [class.no-padding]="noPadding">
+    <ng-content></ng-content>
+  </div>
+
+  <footer *ngIf="hasFooter" class="card-footer">
+    <ng-content select="[card-footer]"></ng-content>
+  </footer>
+</div>

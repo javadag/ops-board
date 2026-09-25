@@ -1,0 +1,122 @@
+:host {
+  display: block;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 1.25rem;
+  min-height: 80px;
+
+  &.is-latest .timeline-node {
+    box-shadow: 0 0 0 4px var(--color-primary-light);
+  }
+}
+
+.timeline-marker-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 18px;
+}
+
+.timeline-node {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--color-border-default);
+  border: 2px solid var(--color-bg-base);
+  z-index: 1;
+  margin-top: 4px;
+
+  &.node-warning {
+    background-color: var(--color-status-investigating);
+  }
+  &.node-danger {
+    background-color: var(--color-status-identified);
+  }
+  &.node-info {
+    background-color: var(--color-status-monitoring);
+  }
+  &.node-success {
+    background-color: var(--color-status-resolved);
+  }
+}
+
+.timeline-line {
+  width: 2px;
+  flex: 1;
+  background-color: var(--color-border-subtle);
+  margin: 4px 0;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-bottom: 1.5rem;
+}
+
+.timeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.375rem;
+  flex-wrap: wrap;
+}
+
+.timeline-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.timeline-time {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.timeline-author {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.timeline-summary {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 0.375rem;
+}
+
+.timeline-details {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-surface-elevated);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--color-border-default);
+  margin-top: 0.375rem;
+  line-height: 1.4;
+}
+
+.timeline-action {
+  font-size: 0.8125rem;
+  color: var(--color-health-healthy);
+  margin-top: 0.375rem;
+
+  .action-tag {
+    font-weight: 700;
+    font-size: 0.7rem;
+  }
+}
+
+.timeline-empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}

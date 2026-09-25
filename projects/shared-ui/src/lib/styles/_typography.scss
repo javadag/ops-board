@@ -1,0 +1,48 @@
+body {
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-base);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  font-size: 1.75rem;
+  line-height: 2rem;
+}
+h2 {
+  font-size: 1.35rem;
+  line-height: 1.75rem;
+}
+h3 {
+  font-size: 1.15rem;
+  line-height: 1.5rem;
+}
+h4 {
+  font-size: 1rem;
+  line-height: 1.35rem;
+}
+
+p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+code,
+pre,
+.font-mono {
+  font-family: var(--font-family-mono);
+}

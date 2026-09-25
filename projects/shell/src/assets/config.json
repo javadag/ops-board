@@ -1,0 +1,14 @@
+{
+  "remotes": {
+    "incidentsRemote": "http://localhost:4201",
+    "servicesRemote": "http://localhost:4202"
+  },
+  "featureFlags": {
+    "incidentReplay": true,
+    "serviceDependencies": true,
+    "analytics": false,
+    "autoRefresh": true
+  },
+  "environment": "production-simulation",
+  "version": "1.0.0"
+}

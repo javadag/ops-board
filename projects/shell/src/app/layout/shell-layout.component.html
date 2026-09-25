@@ -1,0 +1,25 @@
+<div class="shell-layout">
+  <!-- Offline Banner -->
+  <div
+    *ngIf="(isOnline$ | async) === false"
+    class="offline-banner"
+    role="alert"
+  >
+    <span class="offline-icon">⚡</span>
+    <span
+      >You are currently operating offline. Displaying cached system
+      state.</span
+    >
+  </div>
+
+  <app-header (toggleSidebar)="toggleSidebar()"></app-header>
+  <div class="shell-body">
+    <app-sidebar
+      [isOpen]="sidebarOpen()"
+      (closeMobile)="closeSidebar()"
+    ></app-sidebar>
+    <main class="shell-main" (click)="onMainClick()">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

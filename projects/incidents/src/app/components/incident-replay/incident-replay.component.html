@@ -1,0 +1,133 @@
+<div class="replay-card">
+  <header class="replay-header">
+    <div class="replay-title-group">
+      <div class="replay-badge-row">
+        <h4 class="replay-title">Deterministic Timeline Replay</h4>
+        <ui-badge
+          [variant]="
+            isPlaying ? 'healthy' : isCompleted ? 'neutral' : 'warning'
+          "
+          size="sm"
+        >
+          {{ isPlaying ? 'PLAYING' : isCompleted ? 'FINISHED' : 'PAUSED' }}
+        </ui-badge>
+      </div>
+      <p class="replay-desc">
+        Replay incident progression step-by-step to analyze response time,
+        alerts, and mitigation actions.
+      </p>
+    </div>
+
+    <div class="replay-controls">
+      <!-- Step counter -->
+      <span class="step-indicator font-mono">
+        Event {{ currentStep }} of {{ totalSteps }}
+      </span>
+
+      <div class="control-buttons">
+        <!-- Restart Button -->
+        <button
+          type="button"
+          class="ctrl-btn"
+          title="Restart Replay"
+          aria-label="Restart Replay"
+          [disabled]="currentStep === 0 && !isPlaying"
+          (click)="restart()"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="1 4 1 10 7 10" />
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+          </svg>
+        </button>
+
+        <!-- Play/Pause Button -->
+        <button
+          type="button"
+          class="ctrl-btn main-play-btn"
+          [title]="isPlaying ? 'Pause Replay' : 'Play Replay'"
+          [attr.aria-label]="isPlaying ? 'Pause Replay' : 'Play Replay'"
+          [disabled]="isCompleted"
+          (click)="togglePlay()"
+        >
+          <svg
+            *ngIf="!isPlaying"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
+          <svg
+            *ngIf="isPlaying"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <rect x="6" y="4" width="4" height="16" />
+            <rect x="14" y="4" width="4" height="16" />
+          </svg>
+        </button>
+
+        <!-- Step Forward Button -->
+        <button
+          type="button"
+          class="ctrl-btn"
+          title="Step Next"
+          aria-label="Step Next"
+          [disabled]="isCompleted || isPlaying"
+          (click)="stepForward()"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polygon points="5 4 15 12 5 20 5 4" />
+            <line x1="19" y1="5" x2="19" y2="19" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Speed Toggles -->
+      <div class="speed-selector">
+        <button
+          *ngFor="let s of speedOptions"
+          type="button"
+          class="speed-btn"
+          [class.active]="playbackSpeed === s"
+          (click)="setSpeed(s)"
+        >
+          {{ s }}x
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Progress bar -->
+  <div
+    class="progress-track"
+    role="progressbar"
+    [attr.aria-valuenow]="progressPercent"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    <div class="progress-fill" [style.width.%]="progressPercent"></div>
+  </div>
+
+  <!-- Replay Timeline Content -->
+  <div class="replay-body">
+    <ui-timeline [events]="visibleEvents"></ui-timeline>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="select-wrapper" [class.disabled]="disabled">
+  <label *ngIf="label" class="select-label" [attr.for]="id">
+    {{ label }}
+    <span *ngIf="required" class="required">*</span>
+  </label>
+  <div class="select-container">
+    <select
+      [id]="id"
+      [disabled]="disabled"
+      [value]="value"
+      (change)="onSelectionChange($event)"
+      (blur)="onBlur()"
+      class="native-select"
+    >
+      <option *ngIf="placeholder" value="" disabled [selected]="!value">
+        {{ placeholder }}
+      </option>
+      <option
+        *ngFor="let opt of options"
+        [value]="opt.value"
+        [selected]="opt.value === value"
+      >
+        {{ opt.label }}
+      </option>
+    </select>
+    <span class="select-arrow" aria-hidden="true">
+      <svg
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </span>
+  </div>
+  <span *ngIf="error" class="select-error" role="alert">{{ error }}</span>
+</div>

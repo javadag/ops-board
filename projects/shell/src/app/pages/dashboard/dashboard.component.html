@@ -1,0 +1,185 @@
+<div class="dashboard">
+  <div class="dashboard-header">
+    <div>
+      <h1 class="page-title">SRE Command Center</h1>
+      <p class="page-subtitle">
+        Real-time incident response, micro frontend telemetry & service health
+      </p>
+    </div>
+    <div class="quick-actions">
+      <a routerLink="/incidents">
+        <ui-button variant="primary">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          View Active Incidents
+        </ui-button>
+      </a>
+    </div>
+  </div>
+
+  <!-- KPI Summary Cards -->
+  <div class="kpi-grid">
+    <ui-card [elevated]="true">
+      <div class="kpi-content">
+        <div class="kpi-top">
+          <span class="kpi-label">Active P1 Incidents</span>
+          <ui-badge variant="p1" size="sm">CRITICAL</ui-badge>
+        </div>
+        <div class="kpi-value text-danger">1</div>
+        <div class="kpi-footer">
+          <span>Payment Gateway DB Pool Exhaustion</span>
+        </div>
+      </div>
+    </ui-card>
+
+    <ui-card [elevated]="true">
+      <div class="kpi-content">
+        <div class="kpi-top">
+          <span class="kpi-label">Active P2/P3 Incidents</span>
+          <ui-badge variant="p2" size="sm">MAJOR</ui-badge>
+        </div>
+        <div class="kpi-value text-warning">2</div>
+        <div class="kpi-footer">
+          <span>Auth Token Latency & Redis Eviction</span>
+        </div>
+      </div>
+    </ui-card>
+
+    <ui-card [elevated]="true">
+      <div class="kpi-content">
+        <div class="kpi-top">
+          <span class="kpi-label">Service Fleet Health</span>
+          <ui-status-indicator status="healthy"></ui-status-indicator>
+        </div>
+        <div class="kpi-value text-success">98.5%</div>
+        <div class="kpi-footer">
+          <span>12 of 14 Services Fully Operational</span>
+        </div>
+      </div>
+    </ui-card>
+
+    <ui-card [elevated]="true">
+      <div class="kpi-content">
+        <div class="kpi-top">
+          <span class="kpi-label">Global P99 Latency</span>
+          <ui-badge variant="neutral" size="sm">SLA: 250ms</ui-badge>
+        </div>
+        <div class="kpi-value">138ms</div>
+        <div class="kpi-footer">
+          <span class="text-success">Within SLA bounds (99.98% uptime)</span>
+        </div>
+      </div>
+    </ui-card>
+  </div>
+
+  <!-- MFE Status Grid -->
+  <div class="content-grid">
+    <ui-card
+      title="Micro Frontend Architecture Topology"
+      subtitle="Dynamic module federation runtime status"
+    >
+      <div class="topology-grid">
+        <div class="topology-card host">
+          <div class="card-head">
+            <span class="role-pill">HOST CONTAINER</span>
+            <span class="port-num font-mono">:4200</span>
+          </div>
+          <h4 class="card-title">Shell Application</h4>
+          <p class="card-desc">
+            Navigation, Auth Guard, Runtime Config, Feature Flags, and MFE Error
+            Boundaries.
+          </p>
+          <div class="card-meta">
+            <span class="meta-tag">Angular 22 Standalone</span>
+            <span class="meta-tag">Native Federation Host</span>
+          </div>
+        </div>
+
+        <div class="topology-arrow">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </div>
+
+        <div class="topology-card remote">
+          <div class="card-head">
+            <span class="role-pill remote-pill">REMOTE MFE</span>
+            <span class="port-num font-mono">:4201</span>
+          </div>
+          <h4 class="card-title">Incidents MFE</h4>
+          <p class="card-desc">
+            Incident search, triage filters, sorting, incident timeline, and
+            interactive deterministic timeline replay.
+          </p>
+          <div class="card-actions">
+            <a routerLink="/incidents">
+              <ui-button variant="outline" size="sm">Open Incidents</ui-button>
+            </a>
+          </div>
+        </div>
+
+        <div class="topology-arrow">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </div>
+
+        <div class="topology-card remote">
+          <div class="card-head">
+            <span class="role-pill remote-pill">REMOTE MFE</span>
+            <span class="port-num font-mono">:4202</span>
+          </div>
+          <h4 class="card-title">Services MFE</h4>
+          <p class="card-desc">
+            Service catalog, health indicators, error budgets, deployments, and
+            dependency topology graph.
+          </p>
+          <div class="card-actions">
+            <a routerLink="/services">
+              <ui-button variant="outline" size="sm">Open Services</ui-button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </ui-card>
+
+    <ui-card
+      title="Runtime Remote Configuration"
+      subtitle="Configured dynamically from /assets/config.json"
+    >
+      <div class="config-display">
+        <pre class="font-mono">{{ configJson }}</pre>
+        <div class="config-actions">
+          <p class="config-note">
+            Remote URLs are decoupled from build artifacts and loaded before
+            Angular routes initialize.
+          </p>
+        </div>
+      </div>
+    </ui-card>
+  </div>
+</div>

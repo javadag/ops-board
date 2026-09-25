@@ -1,0 +1,34 @@
+<div class="error-state" role="alert">
+  <div class="error-icon" aria-hidden="true">
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="8" x2="12" y2="12" />
+      <line x1="12" y1="16" x2="12.01" y2="16" />
+    </svg>
+  </div>
+  <h4 class="error-title">{{ title }}</h4>
+  <p class="error-message">{{ message }}</p>
+  <div *ngIf="showRetry" class="error-actions">
+    <button type="button" class="retry-btn" (click)="onRetry()">
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="1 4 1 10 7 10" />
+        <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
+      </svg>
+      {{ retryLabel }}
+    </button>
+  </div>
+</div>

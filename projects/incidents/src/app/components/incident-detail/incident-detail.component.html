@@ -1,0 +1,108 @@
+<div class="incident-detail" *ngIf="incident">
+  <!-- Header -->
+  <header class="detail-header">
+    <div class="header-main">
+      <div class="header-badges">
+        <span class="incident-id font-mono">{{ incident.id }}</span>
+        <ui-badge [variant]="getSeverityBadge(incident.severity)" size="sm">
+          {{ incident.severity }}
+        </ui-badge>
+        <ui-badge [variant]="getStatusBadge(incident.status)" size="sm">
+          {{ incident.status }}
+        </ui-badge>
+      </div>
+      <h2 class="incident-title">{{ incident.title }}</h2>
+    </div>
+
+    <div class="header-actions">
+      <ui-button
+        [variant]="viewMode() === 'replay' ? 'primary' : 'outline'"
+        size="sm"
+        (clicked)="toggleViewMode()"
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <polygon points="5 3 19 12 5 21 5 3" />
+        </svg>
+        {{ viewMode() === 'replay' ? 'View Timeline' : 'Replay Incident' }}
+      </ui-button>
+      <ui-button variant="ghost" size="sm" (clicked)="close.emit()">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </ui-button>
+    </div>
+  </header>
+
+  <!-- Key Metadata Grid -->
+  <div class="meta-grid">
+    <div class="meta-item">
+      <span class="meta-label">Affected Service</span>
+      <span class="meta-value font-mono highlight">{{
+        incident.affectedService
+      }}</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Assigned Team</span>
+      <span class="meta-value">{{ incident.assignedTeam }}</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Lead Responder</span>
+      <span class="meta-value">{{ incident.leadResponder }}</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Started At</span>
+      <span class="meta-value font-mono">{{
+        formatTime(incident.startTime)
+      }}</span>
+    </div>
+  </div>
+
+  <!-- Impact & Summary Block -->
+  <div class="summary-section">
+    <div class="info-block">
+      <h4 class="section-title">Incident Summary</h4>
+      <p class="section-text">{{ incident.summary }}</p>
+    </div>
+    <div class="info-block">
+      <h4 class="section-title">Customer & System Impact</h4>
+      <p class="section-text text-danger-soft">{{ incident.impact }}</p>
+    </div>
+  </div>
+
+  <!-- Timeline or Replay View -->
+  <div class="timeline-section">
+    <div class="section-header">
+      <h4 class="section-title">
+        {{
+          viewMode() === 'replay' ? 'Incident Replay Mode' : 'Event Timeline'
+        }}
+      </h4>
+      <span class="event-count font-mono"
+        >{{ incident.timeline.length }} Events</span
+      >
+    </div>
+
+    <div *ngIf="viewMode() === 'timeline'" class="timeline-wrapper">
+      <ui-timeline [events]="incident.timeline"></ui-timeline>
+    </div>
+
+    <div *ngIf="viewMode() === 'replay'" class="replay-wrapper">
+      <incidents-replay [events]="incident.timeline"></incidents-replay>
+    </div>
+  </div>
+</div>

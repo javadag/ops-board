@@ -1,0 +1,11 @@
+@use '../../shared-ui/src/lib/styles/index' as *;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+}

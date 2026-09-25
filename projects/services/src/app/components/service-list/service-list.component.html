@@ -1,0 +1,167 @@
+<div class="services-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Service Catalog &amp; Health</h1>
+      <p class="page-subtitle">
+        Real-time telemetry, deployment status, and dependency topology for core
+        services.
+      </p>
+    </div>
+
+    <div class="header-stats" *ngIf="healthSummary$ | async as summary">
+      <div class="stat-pill">
+        <span class="stat-label">Health Score:</span>
+        <span
+          class="stat-num font-mono"
+          [class.warning]="summary.healthyPercent < 90"
+        >
+          {{ summary.healthyPercent }}%
+        </span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">Total Services:</span>
+        <span class="stat-num font-mono">{{ summary.total }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters & Search Toolbar -->
+  <div class="toolbar">
+    <div class="search-box">
+      <ui-input
+        type="search"
+        placeholder="Search by name, team, description, or version..."
+        [ngModel]="searchTerm$ | async"
+        (ngModelChange)="onSearchChange($event)"
+        size="md"
+      ></ui-input>
+    </div>
+
+    <div class="health-filters" *ngIf="healthSummary$ | async as summary">
+      <button
+        type="button"
+        class="filter-pill"
+        [class.active]="(healthFilter$ | async) === 'all'"
+        (click)="setFilter('all')"
+      >
+        All <span class="count-tag">{{ summary.total }}</span>
+      </button>
+      <button
+        type="button"
+        class="filter-pill pill-healthy"
+        [class.active]="(healthFilter$ | async) === 'healthy'"
+        (click)="setFilter('healthy')"
+      >
+        Healthy <span class="count-tag">{{ summary.healthy }}</span>
+      </button>
+      <button
+        type="button"
+        class="filter-pill pill-degraded"
+        [class.active]="(healthFilter$ | async) === 'degraded'"
+        (click)="setFilter('degraded')"
+      >
+        Degraded <span class="count-tag">{{ summary.degraded }}</span>
+      </button>
+      <button
+        type="button"
+        class="filter-pill pill-down"
+        [class.active]="(healthFilter$ | async) === 'down'"
+        (click)="setFilter('down')"
+      >
+        Down <span class="count-tag">{{ summary.down }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Services Grid -->
+  <div class="services-grid" *ngIf="filteredServices$ | async as services">
+    <div
+      *ngFor="let svc of services; trackBy: trackById"
+      class="service-card"
+      (click)="onSelectService(svc)"
+      role="button"
+      tabindex="0"
+      (keydown.enter)="onSelectService(svc)"
+      (keydown.space)="onSelectService(svc)"
+    >
+      <div class="card-top">
+        <div class="service-identity">
+          <ui-status-indicator
+            [status]="svc.health"
+            [pulse]="svc.health !== 'healthy'"
+          ></ui-status-indicator>
+          <h3 class="service-name">{{ svc.name }}</h3>
+        </div>
+        <ui-badge [variant]="getHealthVariant(svc.health)" size="sm">
+          {{ svc.health | uppercase }}
+        </ui-badge>
+      </div>
+
+      <p class="service-description">{{ svc.description }}</p>
+
+      <div class="service-metrics">
+        <div class="metric-item">
+          <span class="metric-label">Uptime</span>
+          <span
+            class="metric-val font-mono"
+            [class.warning]="svc.uptime < 99.5"
+          >
+            {{ svc.uptime }}%
+          </span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-label">Error Rate</span>
+          <span
+            class="metric-val font-mono"
+            [class.danger]="svc.errorRate > 1.0"
+          >
+            {{ svc.errorRate }}%
+          </span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-label">P99</span>
+          <span class="metric-val font-mono">{{ svc.latencyP99 }}ms</span>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <span class="footer-team">{{ svc.ownerTeam }}</span>
+        <div class="footer-badges">
+          <span class="version-tag font-mono">{{ svc.version }}</span>
+          <ui-badge
+            *ngIf="svc.activeIncidentCount > 0"
+            variant="danger"
+            size="sm"
+          >
+            {{ svc.activeIncidentCount }} Active
+          </ui-badge>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="grid-empty" *ngIf="services.length === 0">
+      <ui-empty-state
+        title="No Services Found"
+        message="No services matched your active search or health status filters."
+        actionText="Reset Filters"
+        (actionClicked)="resetFilters()"
+      ></ui-empty-state>
+    </div>
+  </div>
+
+  <!-- Service Detail Drawer -->
+  <ui-drawer
+    [isOpen]="isDrawerOpen"
+    title="Service Telemetry & Topology"
+    [width]="'640px'"
+    (closed)="closeDrawer()"
+  >
+    <services-detail
+      *ngIf="selectedService$ | async as selected"
+      [service]="selected"
+      (closed)="closeDrawer()"
+    ></services-detail>
+  </ui-drawer>
+</div>

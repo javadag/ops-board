@@ -1,0 +1,72 @@
+<header class="header">
+  <div class="header-left">
+    <button
+      type="button"
+      class="mobile-menu-btn"
+      aria-label="Toggle navigation menu"
+      (click)="toggleSidebar.emit()"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+
+    <a routerLink="/" class="brand">
+      <span class="brand-logo" aria-hidden="true">⚡</span>
+      <span class="brand-text">Ops<span class="brand-accent">Board</span></span>
+    </a>
+
+    <div class="system-status">
+      <ui-status-indicator
+        status="healthy"
+        label="Systems Nominal"
+        [pulse]="true"
+      ></ui-status-indicator>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <ui-badge variant="neutral" size="sm" class="env-badge">
+      {{ configService.getConfig().environment }}
+    </ui-badge>
+
+    <div *ngIf="authService.currentUser as user" class="user-profile">
+      <div class="user-avatar" [attr.aria-label]="user.name">
+        {{ user.name.charAt(0) }}
+      </div>
+      <div class="user-info">
+        <span class="user-name">{{ user.name }}</span>
+        <span class="user-role">{{ user.role }} • {{ user.team }}</span>
+      </div>
+      <button
+        type="button"
+        class="logout-btn"
+        title="Sign out"
+        aria-label="Sign out"
+        (click)="authService.logout()"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

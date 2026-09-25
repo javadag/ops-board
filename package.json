@@ -1,0 +1,51 @@
+{
+  "name": "ops-board",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "ng": "ng",
+    "start": "npm run start:all",
+    "start:all": "node scripts/start-all.mjs",
+    "start:shell": "npm run build:shared && NG_BUILD_OPTIMIZE_CHUNKS=0 ng serve shell --port 4200",
+    "start:incidents": "npm run build:shared && NG_BUILD_OPTIMIZE_CHUNKS=0 ng serve incidents --port 4201",
+    "start:services": "npm run build:shared && NG_BUILD_OPTIMIZE_CHUNKS=0 ng serve services --port 4202",
+    "build": "npm run build:shared && npm run build:remotes && npm run build:shell",
+    "build:shared": "ng build shared-ui",
+    "build:remotes": "NG_BUILD_OPTIMIZE_CHUNKS=0 ng build incidents && NG_BUILD_OPTIMIZE_CHUNKS=0 ng build services",
+    "build:shell": "NG_BUILD_OPTIMIZE_CHUNKS=0 ng build shell",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "@angular/animations": "^22.2.0",
+    "@angular/common": "^22.2.0",
+    "@angular/compiler": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "@angular/forms": "^22.2.0",
+    "@angular/platform-browser": "^22.2.0",
+    "@angular/platform-browser-dynamic": "^22.2.0",
+    "@angular/router": "^22.2.0",
+    "@angular/service-worker": "^22.2.0",
+    "rxjs": "^7.8.1",
+    "tslib": "^2.6.3",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-architects/native-federation": "^22.2.1",
+    "@angular-devkit/build-angular": "^22.2.0",
+    "@angular/build": "^22.2.0",
+    "@angular/cli": "^22.2.0",
+    "@angular/compiler-cli": "^22.2.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.13.0",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2",
+    "jest-preset-angular": "^17.0.1",
+    "ng-packagr": "^22.2.1",
+    "prettier": "^3.5.3",
+    "typescript": "~6.0.3"
+  }
+}

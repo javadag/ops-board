@@ -1,0 +1,33 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <span class="logo" aria-hidden="true">⚡</span>
+      <h1 class="title">OpsBoard</h1>
+      <p class="subtitle">
+        Select an SRE Persona to enter the Operations Platform
+      </p>
+    </div>
+
+    <div class="user-list">
+      <div
+        *ngFor="let user of users"
+        class="user-item"
+        [class.selected]="selectedUserId === user.id"
+        (click)="selectUser(user.id)"
+      >
+        <div class="avatar">{{ user.name.charAt(0) }}</div>
+        <div class="info">
+          <span class="name">{{ user.name }}</span>
+          <span class="role">{{ user.role }} • {{ user.team }}</span>
+        </div>
+        <ui-badge variant="neutral" size="sm">{{ user.role }}</ui-badge>
+      </div>
+    </div>
+
+    <div class="login-actions">
+      <ui-button variant="primary" size="lg" (clicked)="onLogin()">
+        Authenticate Session
+      </ui-button>
+    </div>
+  </div>
+</div>

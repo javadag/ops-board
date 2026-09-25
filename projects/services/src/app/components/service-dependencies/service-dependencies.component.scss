@@ -1,0 +1,102 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.dependencies-container {
+  display: grid;
+  grid-template-columns: 1fr 20px 1fr;
+  gap: 1rem;
+  background-color: var(--color-bg-surface-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dep-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.col-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.direction-arrow {
+  color: var(--color-primary);
+}
+
+.dep-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dep-card {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.625rem 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dep-top {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.dep-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.dep-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dep-role {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+}
+
+.center-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+.center-line {
+  width: 1px;
+  height: 100%;
+  background-color: var(--color-border-subtle);
+}
+
+.dep-empty {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  padding: 0.75rem;
+  font-style: italic;
+}

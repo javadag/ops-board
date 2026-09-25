@@ -1,0 +1,85 @@
+<div class="table-container">
+  <table class="data-table" role="table">
+    <thead>
+      <tr role="row">
+        <th
+          *ngFor="let col of columns"
+          [style.width]="col.width || 'auto'"
+          [class.sortable]="col.sortable"
+          (click)="onHeaderClick(col)"
+          role="columnheader"
+          [attr.aria-sort]="getAriaSort(col.key)"
+        >
+          <div class="header-content">
+            <span>{{ col.header }}</span>
+            <span *ngIf="col.sortable" class="sort-icon" aria-hidden="true">
+              <svg
+                *ngIf="sortColumn !== col.key"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="7 15 12 20 17 15" />
+                <polyline points="7 9 12 4 17 9" />
+              </svg>
+              <svg
+                *ngIf="sortColumn === col.key && sortOrder === 'asc'"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="18 15 12 9 6 15" />
+              </svg>
+              <svg
+                *ngIf="sortColumn === col.key && sortOrder === 'desc'"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let row of data; trackBy: trackByFn"
+        [class.row-interactive]="rowClickable"
+        (click)="onRowClick(row)"
+        role="row"
+      >
+        <td *ngFor="let col of columns" role="cell">
+          <ng-container *ngIf="customCellTemplate; else defaultCell">
+            <ng-container
+              *ngTemplateOutlet="
+                customCellTemplate;
+                context: { $implicit: row, column: col }
+              "
+            ></ng-container>
+          </ng-container>
+          <ng-template #defaultCell>
+            {{ getCellValue(row, col) }}
+          </ng-template>
+        </td>
+      </tr>
+      <tr *ngIf="!data || data.length === 0" class="empty-row">
+        <td [attr.colspan]="columns.length" class="empty-cell">
+          <ng-content select="[table-empty]">
+            <div class="default-empty">No items to display</div>
+          </ng-content>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

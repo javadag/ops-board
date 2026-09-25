@@ -1,0 +1,27 @@
+<div class="remote-container">
+  <div *ngIf="isLoading" class="loading-container">
+    <ui-spinner
+      size="lg"
+      [message]="'Connecting to ' + remoteName + ' MFE...'"
+    ></ui-spinner>
+  </div>
+
+  <div *ngIf="hasError" class="error-container">
+    <ui-error-state
+      [title]="'Unable to load ' + remoteName + ' micro frontend'"
+      [message]="
+        errorMessage ||
+        'The remote micro frontend service is currently unreachable. Check that the service is running and retry.'
+      "
+      [showRetry]="true"
+      retryLabel="Retry Connection"
+      (retry)="loadRemote()"
+    ></ui-error-state>
+  </div>
+
+  <div
+    #container
+    class="remote-content"
+    [class.hidden]="isLoading || hasError"
+  ></div>
+</div>

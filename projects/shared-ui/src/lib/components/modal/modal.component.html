@@ -1,0 +1,40 @@
+<div *ngIf="isOpen" class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div
+    class="modal-dialog modal-{{ size }}"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="title ? 'modal-title' : null"
+    (click)="$event.stopPropagation()"
+  >
+    <header *ngIf="title || showClose" class="modal-header">
+      <h3 *ngIf="title" id="modal-title" class="modal-title">{{ title }}</h3>
+      <button
+        *ngIf="showClose"
+        type="button"
+        class="modal-close-btn"
+        aria-label="Close dialog"
+        (click)="close.emit()"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </header>
+
+    <div class="modal-body">
+      <ng-content></ng-content>
+    </div>
+
+    <footer *ngIf="hasFooter" class="modal-footer">
+      <ng-content select="[modal-footer]"></ng-content>
+    </footer>
+  </div>
+</div>

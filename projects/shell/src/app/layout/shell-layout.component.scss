@@ -1,0 +1,42 @@
+.shell-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-base);
+}
+
+.offline-banner {
+  background-color: var(--color-warning);
+  color: #0b0f17;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.offline-icon {
+  font-size: 1rem;
+}
+
+.shell-body {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.shell-main {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+}

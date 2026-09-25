@@ -1,0 +1,109 @@
+<div class="incidents-container">
+  <header class="page-header">
+    <div>
+      <h1 class="page-title">Incidents Management</h1>
+      <p class="page-subtitle">
+        Real-time incident response, triage, severity tracking and timeline
+        inspection
+      </p>
+    </div>
+  </header>
+
+  <!-- Filter Controls -->
+  <incidents-filters></incidents-filters>
+
+  <!-- Data Table -->
+  <ng-container *ngIf="incidentService.filteredIncidents$ | async as incidents">
+    <ui-data-table
+      [columns]="columns"
+      [data]="incidents"
+      [sortColumn]="(incidentService.filters$ | async)?.sortBy || 'startTime'"
+      [sortOrder]="(incidentService.filters$ | async)?.sortOrder || 'desc'"
+      [rowClickable]="true"
+      [customCellTemplate]="customCell"
+      (rowClick)="onIncidentClick($event)"
+      (sortChange)="onSortChange($event)"
+    >
+      <div empty-message>
+        <ui-empty-state
+          title="No Incidents Found"
+          message="No incidents match the active search criteria and filter rules."
+          actionLabel="Reset Filters"
+          (action)="incidentService.resetFilters()"
+        ></ui-empty-state>
+      </div>
+    </ui-data-table>
+
+    <!-- Custom cell templates -->
+    <ng-template #customCell let-row let-col="column">
+      <ng-container [ngSwitch]="col.key">
+        <!-- Severity Badge -->
+        <ng-container *ngSwitchCase="'severity'">
+          <ui-badge [variant]="getSeverityVariant(row.severity)" size="sm">
+            {{ row.severity }}
+          </ui-badge>
+        </ng-container>
+
+        <!-- ID Column -->
+        <ng-container *ngSwitchCase="'id'">
+          <span class="font-mono incident-id-cell">{{ row.id }}</span>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container *ngSwitchCase="'title'">
+          <div class="title-cell">
+            <span class="incident-title-text">{{ row.title }}</span>
+            <span class="incident-summary-preview">{{ row.summary }}</span>
+          </div>
+        </ng-container>
+
+        <!-- Service Column -->
+        <ng-container *ngSwitchCase="'affectedService'">
+          <span class="service-tag font-mono">{{ row.affectedService }}</span>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container *ngSwitchCase="'status'">
+          <ui-badge
+            [variant]="getStatusVariant(row.status)"
+            size="sm"
+            [showDot]="true"
+          >
+            {{ row.status }}
+          </ui-badge>
+        </ng-container>
+
+        <!-- Started Column -->
+        <ng-container *ngSwitchCase="'startTime'">
+          <span class="font-mono time-cell">{{
+            formatTime(row.startTime)
+          }}</span>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container *ngSwitchCase="'actions'">
+          <ui-button
+            variant="outline"
+            size="sm"
+            (clicked)="onIncidentClick(row); $event.stopPropagation()"
+          >
+            Inspect
+          </ui-button>
+        </ng-container>
+      </ng-container>
+    </ng-template>
+  </ng-container>
+
+  <!-- Incident Detail Drawer -->
+  <ui-drawer
+    [isOpen]="!!(incidentService.selectedIncident$ | async)"
+    [title]="(incidentService.selectedIncident$ | async)?.id"
+    [subtitle]="(incidentService.selectedIncident$ | async)?.affectedService"
+    (close)="incidentService.selectIncident(null)"
+  >
+    <incidents-detail
+      [incident]="incidentService.selectedIncident$ | async"
+      (close)="incidentService.selectIncident(null)"
+    ></incidents-detail>
+  </ui-drawer>
+</div>

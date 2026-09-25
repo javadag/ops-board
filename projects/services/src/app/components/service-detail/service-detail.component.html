@@ -1,0 +1,139 @@
+<div class="service-detail" *ngIf="service">
+  <!-- Header -->
+  <div class="detail-header">
+    <div class="header-left">
+      <div class="header-title-row">
+        <ui-status-indicator
+          [status]="service.health"
+          [pulse]="service.health !== 'healthy'"
+        ></ui-status-indicator>
+        <h2 class="service-title">{{ service.name }}</h2>
+        <ui-badge [variant]="getHealthVariant(service.health)" size="sm">
+          {{ service.health | uppercase }}
+        </ui-badge>
+        <ui-badge variant="neutral" size="sm">{{ service.tier }}</ui-badge>
+      </div>
+      <p class="service-desc">{{ service.description }}</p>
+    </div>
+
+    <div class="header-actions">
+      <ui-button
+        variant="secondary"
+        size="sm"
+        (clicked)="viewIncidents()"
+        title="Inspect related incidents for this service"
+      >
+        <span class="btn-content">
+          <span>View Incidents ({{ service.activeIncidentCount }})</span>
+          <span class="external-icon">↗</span>
+        </span>
+      </ui-button>
+      <ui-button variant="ghost" size="sm" (clicked)="closed.emit()"
+        >Close</ui-button
+      >
+    </div>
+  </div>
+
+  <!-- Telemetry KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <span class="kpi-label">Uptime SLA</span>
+      <span class="kpi-value font-mono" [class.warning]="service.uptime < 99.5">
+        {{ service.uptime }}%
+      </span>
+      <span class="kpi-sub">Last 30 days</span>
+    </div>
+
+    <div class="kpi-card">
+      <span class="kpi-label">Error Rate</span>
+      <span
+        class="kpi-value font-mono"
+        [class.danger]="service.errorRate > 1.0"
+      >
+        {{ service.errorRate }}%
+      </span>
+      <span class="kpi-sub">Target &lt; 0.1%</span>
+    </div>
+
+    <div class="kpi-card">
+      <span class="kpi-label">P99 Latency</span>
+      <span
+        class="kpi-value font-mono"
+        [class.warning]="service.latencyP99 > 500"
+      >
+        {{ service.latencyP99 }} ms
+      </span>
+      <span class="kpi-sub">SLO &lt; 250ms</span>
+    </div>
+
+    <div class="kpi-card">
+      <span class="kpi-label">Active Incidents</span>
+      <span
+        class="kpi-value font-mono"
+        [class.danger]="service.activeIncidentCount > 0"
+      >
+        {{ service.activeIncidentCount }}
+      </span>
+      <span class="kpi-sub">Open P1-P4</span>
+    </div>
+  </div>
+
+  <!-- Service Metadata -->
+  <div class="metadata-section">
+    <div class="meta-row">
+      <span class="meta-label">Owner Team:</span>
+      <span class="meta-value">{{ service.ownerTeam }}</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-label">Current Version:</span>
+      <span class="meta-value font-mono">{{ service.version }}</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-label">Identifier:</span>
+      <span class="meta-value font-mono">{{ service.id }}</span>
+    </div>
+  </div>
+
+  <!-- Deployment History -->
+  <div class="section-block" *ngIf="service.lastDeployment">
+    <h3 class="section-title">Latest Deployment</h3>
+    <div class="deployment-card">
+      <div class="deploy-header">
+        <span class="deploy-version font-mono">{{
+          service.lastDeployment.version
+        }}</span>
+        <ui-badge variant="success" size="sm">{{
+          service.lastDeployment.status
+        }}</ui-badge>
+      </div>
+      <div class="deploy-details">
+        <div class="deploy-detail-item">
+          <span class="detail-label">Deployed By:</span>
+          <span class="detail-val">{{
+            service.lastDeployment.deployedBy
+          }}</span>
+        </div>
+        <div class="deploy-detail-item">
+          <span class="detail-label">Deployed At:</span>
+          <span class="detail-val font-mono">{{
+            service.lastDeployment.deployedAt | date: 'medium'
+          }}</span>
+        </div>
+        <div class="deploy-detail-item">
+          <span class="detail-label">Commit SHA:</span>
+          <span class="detail-val font-mono code-pill">{{
+            service.lastDeployment.commitSha
+          }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dependency Topology -->
+  <div class="section-block" *ngIf="showDependencies">
+    <h3 class="section-title">Dependency Topology</h3>
+    <services-dependencies
+      [dependencies]="service.dependencies"
+    ></services-dependencies>
+  </div>
+</div>

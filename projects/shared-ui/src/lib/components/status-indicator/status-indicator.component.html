@@ -1,0 +1,11 @@
+<div class="indicator status-{{ status }}" [attr.aria-label]="label || status">
+  <span class="dot-wrapper">
+    <span
+      *ngIf="pulse && status !== 'neutral'"
+      class="pulse-ring"
+      aria-hidden="true"
+    ></span>
+    <span class="dot" aria-hidden="true"></span>
+  </span>
+  <span *ngIf="label" class="label">{{ label }}</span>
+</div>

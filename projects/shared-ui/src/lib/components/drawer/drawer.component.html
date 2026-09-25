@@ -1,0 +1,44 @@
+<div *ngIf="isOpen" class="drawer-backdrop" (click)="onBackdropClick($event)">
+  <aside
+    class="drawer-panel drawer-{{ position }}"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="title ? 'drawer-title' : null"
+    (click)="$event.stopPropagation()"
+  >
+    <header class="drawer-header">
+      <div class="drawer-title-group">
+        <h3 *ngIf="title" id="drawer-title" class="drawer-title">
+          {{ title }}
+        </h3>
+        <p *ngIf="subtitle" class="drawer-subtitle">{{ subtitle }}</p>
+      </div>
+      <button
+        type="button"
+        class="drawer-close-btn"
+        aria-label="Close panel"
+        (click)="close.emit()"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </header>
+
+    <div class="drawer-body">
+      <ng-content></ng-content>
+    </div>
+
+    <footer *ngIf="hasFooter" class="drawer-footer">
+      <ng-content select="[drawer-footer]"></ng-content>
+    </footer>
+  </aside>
+</div>

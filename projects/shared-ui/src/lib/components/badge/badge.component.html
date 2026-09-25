@@ -1,0 +1,7 @@
+<span
+  class="badge badge-{{ variant }} badge-{{ size }}"
+  [attr.aria-label]="label || text"
+>
+  <span *ngIf="showDot" class="badge-dot" aria-hidden="true"></span>
+  <ng-content>{{ text }}</ng-content>
+</span>

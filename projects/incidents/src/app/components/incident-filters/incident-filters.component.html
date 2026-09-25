@@ -1,0 +1,80 @@
+<div
+  class="filters-container"
+  *ngIf="incidentService.filters$ | async as filters"
+>
+  <div class="filter-row top-row">
+    <!-- Search bar -->
+    <div class="search-box">
+      <ui-input
+        placeholder="Search by ID, title, summary, or service..."
+        [value]="filters.search || ''"
+        (valueChange)="onSearchChange($event)"
+        [hasPrefix]="true"
+      >
+        <span input-prefix aria-hidden="true">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </span>
+      </ui-input>
+    </div>
+
+    <!-- Service Dropdown -->
+    <div class="service-box">
+      <ui-select
+        [options]="serviceOptions"
+        [value]="filters.service || 'ALL'"
+        (selectionChange)="onServiceChange($event)"
+      ></ui-select>
+    </div>
+
+    <!-- Reset Button -->
+    <div class="reset-box">
+      <ui-button variant="ghost" size="md" (clicked)="onReset()">
+        Reset Filters
+      </ui-button>
+    </div>
+  </div>
+
+  <div class="filter-row bottom-row">
+    <!-- Status Filter Pills -->
+    <div class="filter-group">
+      <span class="group-label">Status:</span>
+      <div class="pill-group">
+        <button
+          *ngFor="let s of statusOptions"
+          type="button"
+          class="filter-pill"
+          [class.active]="filters.status === s"
+          (click)="onStatusClick(s)"
+        >
+          {{ s }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Severity Filter Pills -->
+    <div class="filter-group">
+      <span class="group-label">Severity:</span>
+      <div class="pill-group">
+        <button
+          *ngFor="let sev of severityOptions"
+          type="button"
+          class="filter-pill sev-{{ sev.toLowerCase() }}"
+          [class.active]="filters.severity === sev"
+          (click)="onSeverityClick(sev)"
+        >
+          {{ sev }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

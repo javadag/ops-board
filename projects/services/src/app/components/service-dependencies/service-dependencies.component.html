@@ -1,0 +1,54 @@
+<div class="dependencies-container">
+  <!-- Upstream Callers -->
+  <div class="dep-column">
+    <h4 class="col-title">
+      <span class="direction-arrow font-mono">↓</span>
+      Upstream Callers (Depend on this service)
+    </h4>
+
+    <div class="dep-list">
+      <div *ngFor="let dep of upstreamDeps" class="dep-card">
+        <div class="dep-top">
+          <ui-status-indicator [status]="dep.health"></ui-status-indicator>
+          <span class="dep-name">{{ dep.name }}</span>
+        </div>
+        <div class="dep-meta">
+          <ui-badge variant="neutral" size="sm">{{ dep.protocol }}</ui-badge>
+          <span class="dep-role">Client</span>
+        </div>
+      </div>
+      <div *ngIf="upstreamDeps.length === 0" class="dep-empty">
+        No upstream callers recorded.
+      </div>
+    </div>
+  </div>
+
+  <!-- Center Active Node -->
+  <div class="center-divider">
+    <div class="center-line"></div>
+  </div>
+
+  <!-- Downstream Dependencies -->
+  <div class="dep-column">
+    <h4 class="col-title">
+      <span class="direction-arrow font-mono">→</span>
+      Downstream Dependencies (Called by this service)
+    </h4>
+
+    <div class="dep-list">
+      <div *ngFor="let dep of downstreamDeps" class="dep-card">
+        <div class="dep-top">
+          <ui-status-indicator [status]="dep.health"></ui-status-indicator>
+          <span class="dep-name">{{ dep.name }}</span>
+        </div>
+        <div class="dep-meta">
+          <ui-badge variant="neutral" size="sm">{{ dep.protocol }}</ui-badge>
+          <span class="dep-role">Service Dependency</span>
+        </div>
+      </div>
+      <div *ngIf="downstreamDeps.length === 0" class="dep-empty">
+        No downstream dependencies recorded.
+      </div>
+    </div>
+  </div>
+</div>

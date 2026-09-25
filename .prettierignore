@@ -1,0 +1,6 @@
+node_modules
+dist
+.angular
+.native-federation
+coverage
+package-lock.json
